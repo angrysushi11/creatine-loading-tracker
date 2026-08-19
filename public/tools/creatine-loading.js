@@ -72,7 +72,8 @@ const safetyCopy = `
   <p>Amounts above 5 g can be recorded as factual history; their presence in the log is not a recommendation to take that amount.</p>
   <p>If you are pregnant or breastfeeding, have kidney disease, take medication that affects kidney function, or have been told to limit creatine, check with a clinician before supplementing.</p>
   <p>Tell a clinician you use creatine when discussing kidney-related blood tests, because supplementation can affect interpretation of serum creatinine.</p>
-  <p>Stop and seek clinical advice for persistent or concerning symptoms.</p>`;
+  <p>Stop and seek clinical advice for persistent or concerning symptoms.</p>
+  <p><a href="https://github.com/angrysushi11/creatine-loading-tracker" target="_blank" rel="noreferrer">Source code and exact data boundary</a>.</p>`;
 document.querySelectorAll("[data-safety-copy]").forEach((element) => { element.innerHTML = safetyCopy; });
 
 function detectedTimeZone() {
