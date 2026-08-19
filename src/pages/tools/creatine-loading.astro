@@ -1,0 +1,192 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import "../../styles/creatine-loading.css";
+---
+
+<BaseLayout
+  title="Creatine Loading Tracker"
+  description="A personal creatine loading and dose tracker with optional account saving."
+  noindex={true}
+  analytics={false}
+  portfolio
+>
+  <div class="creatine-app" data-creatine-app>
+    <noscript><p class="creatine-warning">This tracker needs JavaScript to store dose history in this browser.</p></noscript>
+    <p class="creatine-warning" id="storageWarning" role="alert" hidden></p>
+    <p class="creatine-live" id="liveStatus" aria-live="polite" aria-atomic="true"></p>
+
+    <section class="creatine-setup" id="setupPanel" aria-labelledby="setupTitle" hidden>
+      <p class="creatine-kicker">Personal direct-link beta</p>
+      <h1 id="setupTitle">Creatine loading tracker</h1>
+      <p class="creatine-intro">Record what you actually take and follow an estimated loading timeline. You can start without an account.</p>
+      <form id="setupForm" class="creatine-form">
+        <div class="creatine-field">
+          <label for="weight">Your weight</label>
+          <div class="creatine-weight-row">
+            <input id="weight" name="weight" type="number" min="30" max="300" step="0.1" inputmode="decimal" required />
+            <select id="weightUnit" name="weightUnit" aria-label="Weight unit"><option value="kg">kg</option><option value="lb">lb</option></select>
+          </div>
+          <p class="creatine-helper">Used only to calculate the loading target in this tracker.</p>
+        </div>
+        <fieldset class="creatine-dose-choice" id="setupDoseChoice">
+          <legend>Usual quick-log amount</legend>
+          <div class="creatine-dose-options">
+            <label><input type="radio" name="defaultDose" value="3" /> <span>3 g</span></label>
+            <label><input type="radio" name="defaultDose" value="5" checked /> <span>5 g</span></label>
+            <label><input type="radio" name="defaultDose" value="custom" /> <span>Custom</span></label>
+          </div>
+          <div class="creatine-field" id="setupCustomDoseWrap" hidden><label for="setupCustomDose">Custom amount (g)</label><input id="setupCustomDose" name="customDose" type="number" min="0.1" max="100" step="0.1" inputmode="decimal" disabled /></div>
+          <p class="creatine-helper">This sets the one-tap button. It records your amount; it is not a dose recommendation.</p>
+          <p class="creatine-dose-warning" id="setupDoseWarning" role="status" hidden></p>
+        </fieldset>
+        <div class="creatine-field">
+          <label for="trackingStartDate">Tracking-start date</label>
+          <input id="trackingStartDate" name="trackingStartDate" type="date" required />
+          <p class="creatine-helper">We’ll assume no supplemental creatine before this date. You can add earlier doses next.</p>
+        </div>
+        <div class="creatine-field">
+          <label for="setupTimezone">Tracker timezone</label>
+          <input id="setupTimezone" type="text" readonly />
+          <p class="creatine-helper">Detected from this browser. You can change it later in settings.</p>
+        </div>
+        <button class="creatine-button creatine-button--primary" type="submit">Start tracking</button>
+        <aside class="creatine-notice">
+          <p>For adults using creatine monohydrate.</p>
+          <p>Loading is optional; a lower daily amount reaches a similar typical plateau more gradually.</p>
+          <p>This tool tracks reported doses and estimates progress; it is not medical advice.</p>
+        </aside>
+      </form>
+      <section class="creatine-recovery" id="recoveryActions" hidden aria-labelledby="recoveryTitle">
+        <h2 id="recoveryTitle">Recover saved tracker data</h2>
+        <p>Import a valid backup to recover this tracker, or remove the unusable saved tracker data from this browser.</p>
+        <div class="creatine-data-actions"><button id="recoveryImportTrigger" type="button">Import backup</button><input id="recoveryImportData" type="file" accept="application/json" hidden /><button id="recoveryDelete" type="button" class="creatine-danger">Delete saved tracker data</button></div>
+      </section>
+      <details class="creatine-details"><summary>Method &amp; safety</summary><div class="creatine-details__content" data-safety-copy></div></details>
+    </section>
+
+    <section class="creatine-dashboard" id="dashboardPanel" aria-labelledby="dashboardTitle" hidden>
+      <header class="creatine-dashboard__header">
+        <div><p class="creatine-kicker">Personal tracker</p><h1 id="dashboardTitle">Creatine loading</h1></div>
+      </header>
+
+      <section class="creatine-progress-card" aria-labelledby="progressTitle">
+        <div class="creatine-progress-card__top"><p id="progressTitle">Estimated loading progress</p></div>
+        <div class="creatine-progress-row">
+          <div class="creatine-progress" id="progressBar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0 percent estimated loading progress"><span></span></div>
+          <strong id="progressValue">0.0%</strong>
+        </div>
+      </section>
+
+      <section class="creatine-today-card" aria-labelledby="todayTitle">
+        <div><p class="creatine-kicker" id="todayTitle">Today</p><p class="creatine-today-line" id="todayLine">0 g logged today · target about 0 g</p></div>
+        <section class="creatine-today-schedule" id="todaySchedule" aria-labelledby="todayScheduleHeading" hidden>
+          <h2 id="todayScheduleHeading">Suggested timing today</h2>
+          <p class="creatine-helper" id="todayScheduleContext" hidden></p>
+          <ol id="todayScheduleList"></ol>
+          <p class="creatine-helper" id="todayScheduleNote" hidden></p>
+        </section>
+        <div class="creatine-actions">
+          <button class="creatine-button creatine-button--primary" id="logNow" type="button">Log 5 g now</button>
+          <button class="creatine-button creatine-button--secondary" id="addEarlier" type="button">Add or edit a dose</button>
+        </div>
+      </section>
+      <p class="creatine-missed" id="missedDay" hidden>No dose logged yesterday. Creatine stores change gradually. Resume today’s normal plan — do not double it to make up for yesterday.</p>
+      <div class="creatine-undo" id="undoToast" role="status" hidden><span id="undoText"></span><button id="undoRemoval" type="button">Undo</button></div>
+
+      <details class="creatine-history creatine-details">
+        <summary><h2 id="historyTitle">Dose history · <span id="historyCount">0 entries</span></h2></summary>
+        <div class="creatine-details__content">
+          <div class="creatine-section-heading"><p>Every entry records the amount you reported taking.</p></div>
+          <div id="historyList"></div>
+        </div>
+      </details>
+      <details class="creatine-details"><summary>Method &amp; safety</summary><div class="creatine-details__content" data-safety-copy></div></details>
+    </section>
+
+    <section class="creatine-account" id="accountPanel" aria-label="Account and saving">
+      <div id="accountLoading"><p class="creatine-kicker">Saving</p><p class="creatine-helper">Checking account…</p></div>
+      <div id="guestAccount" hidden>
+        <div><p class="creatine-kicker">Saved in this browser</p><p class="creatine-helper">Without an account, your tracker can be lost if browser data is cleared or you change devices.</p></div>
+        <button class="creatine-text-button" id="openEmailSignIn" type="button">Save with email</button>
+      </div>
+      <div id="signedInAccount" hidden>
+        <div><p class="creatine-kicker">Cloud saving on</p><p class="creatine-helper"><span id="accountEmail"></span> · <span id="cloudStatus">Checking cloud data…</span></p></div>
+        <button class="creatine-text-button" id="signOut" type="button">Sign out</button>
+      </div>
+    </section>
+
+    <details class="creatine-settings creatine-details" id="settingsPanel" hidden aria-label="Tracker settings">
+      <summary>Settings</summary>
+      <div class="creatine-details__content">
+        <form id="settingsForm" class="creatine-form creatine-form--compact">
+          <div class="creatine-field"><label for="settingsWeight">Weight (kg)</label><input id="settingsWeight" type="number" min="30" max="300" step="0.1" inputmode="decimal" required /></div>
+          <fieldset class="creatine-dose-choice" id="settingsDoseChoice">
+            <legend>Usual quick-log amount</legend>
+            <div class="creatine-dose-options">
+              <label><input type="radio" name="settingsDose" value="3" /> <span>3 g</span></label>
+              <label><input type="radio" name="settingsDose" value="5" /> <span>5 g</span></label>
+              <label><input type="radio" name="settingsDose" value="custom" /> <span>Custom</span></label>
+            </div>
+            <div class="creatine-field" id="settingsCustomDoseWrap" hidden><label for="settingsCustomDose">Custom amount (g)</label><input id="settingsCustomDose" type="number" min="0.1" max="100" step="0.1" inputmode="decimal" disabled /></div>
+            <p class="creatine-dose-warning" id="settingsDoseWarning" role="status" hidden></p>
+          </fieldset>
+          <div class="creatine-field"><label for="settingsStartDate">Tracking-start date</label><input id="settingsStartDate" type="date" required /><p class="creatine-helper">This is the assumed pre-supplement baseline date.</p></div>
+          <div class="creatine-field"><label for="settingsTimezone">Tracker timezone</label><input id="settingsTimezone" type="text" required /><p class="creatine-helper">Use an IANA name, such as Asia/Makassar.</p></div>
+          <button class="creatine-button creatine-button--secondary" type="submit">Save settings</button>
+        </form>
+        <div class="creatine-data-actions"><button id="exportData" type="button">Export backup</button><button id="importTrigger" type="button">Import backup</button><input id="importData" type="file" accept="application/json" hidden /><button id="deleteData" type="button" class="creatine-danger">Delete tracker data</button><button id="deleteAccount" type="button" class="creatine-danger" hidden>Delete account</button></div>
+        <p class="creatine-privacy" id="privacySummary">Without an account, your weight and dose history exist only in this browser and can be lost.</p>
+      </div>
+    </details>
+
+    <dialog class="creatine-dialog" id="doseDialog" aria-labelledby="doseDialogTitle">
+      <form id="doseForm" class="creatine-form" novalidate>
+        <div class="creatine-dialog__heading"><h2 id="doseDialogTitle">Add a dose</h2><button class="creatine-icon-button" id="closeDoseDialog" type="button" aria-label="Close">×</button></div>
+        <div class="creatine-field"><label for="doseAmount">Amount actually taken (g)</label><input id="doseAmount" type="number" min="0.1" max="100" step="0.1" inputmode="decimal" required /></div>
+        <div class="creatine-shortcuts" aria-label="Quick amount choices"><button type="button" data-dose-grams="3">3 g</button><button type="button" data-dose-grams="5">5 g</button></div>
+        <p class="creatine-helper">For record-keeping only. This does not recommend a dose.</p>
+        <p class="creatine-dose-warning" id="doseAmountWarning" role="status" hidden></p>
+        <div class="creatine-shortcuts"><button type="button" data-dose-shortcut="today">Today</button><button type="button" data-dose-shortcut="yesterday">Yesterday</button></div>
+        <div class="creatine-field"><label for="doseDate">Date</label><input id="doseDate" type="date" required /></div>
+        <div class="creatine-field"><label for="doseTime">Time</label><input id="doseTime" type="time" required /></div>
+        <p id="doseError" class="creatine-error" role="alert" hidden></p>
+        <button class="creatine-button creatine-button--primary" id="saveDose" type="submit">Add dose</button>
+      </form>
+    </dialog>
+
+    <dialog class="creatine-dialog" id="savePromptDialog" aria-labelledby="savePromptTitle">
+      <form method="dialog" class="creatine-form">
+        <div class="creatine-dialog__heading"><h2 id="savePromptTitle">Keep your tracker across devices?</h2><button class="creatine-icon-button" value="cancel" aria-label="Close">×</button></div>
+        <p>Your tracker is currently saved only in this browser. Without an account, it can be lost if browser data is cleared or you change devices.</p>
+        <button class="creatine-button creatine-button--primary" id="promptEmailSignIn" type="button">Save with email</button>
+        <button class="creatine-button creatine-button--secondary" value="cancel">Not now</button>
+      </form>
+    </dialog>
+
+    <dialog class="creatine-dialog" id="emailSignInDialog" aria-labelledby="emailSignInTitle">
+      <form id="emailSignInForm" class="creatine-form">
+        <div class="creatine-dialog__heading"><h2 id="emailSignInTitle">Save your tracker</h2><button class="creatine-icon-button" id="closeEmailSignIn" type="button" aria-label="Close">×</button></div>
+        <p>Enter your email and we’ll send a secure sign-in link. No password needed.</p>
+        <div class="creatine-field"><label for="signInEmail">Email address</label><input id="signInEmail" type="email" inputmode="email" autocomplete="email" required /></div>
+        <p class="creatine-helper" id="emailSignInStatus" role="status"></p>
+        <button class="creatine-button creatine-button--primary" id="sendSignInLink" type="submit">Send sign-in link</button>
+      </form>
+    </dialog>
+
+    <dialog class="creatine-dialog" id="cloudConflictDialog" aria-labelledby="cloudConflictTitle" aria-describedby="cloudConflictCopy">
+      <form method="dialog" class="creatine-form">
+        <div class="creatine-dialog__heading"><h2 id="cloudConflictTitle">Two tracker histories found</h2></div>
+        <p id="cloudConflictCopy">Your account and this device contain different entries. Using the account history replaces the tracker currently stored on this device.</p>
+        <button class="creatine-button creatine-button--primary" id="useAccountData" type="button">Use account history</button>
+        <button class="creatine-button creatine-button--secondary" id="keepBrowserData" type="button">Keep device history and sign out</button>
+        <button class="creatine-button creatine-button--secondary" id="downloadBrowserBackup" type="button">Download device backup</button>
+      </form>
+    </dialog>
+
+    <dialog class="creatine-dialog" id="deleteDialog" aria-labelledby="deleteDialogTitle"><form method="dialog" class="creatine-form"><div class="creatine-dialog__heading"><h2 id="deleteDialogTitle">Delete tracker data?</h2></div><p id="deleteDialogCopy">This removes your profile and dose history. This cannot be undone.</p><div class="creatine-actions"><button class="creatine-button creatine-button--secondary" value="cancel">Cancel</button><button class="creatine-button creatine-button--danger" id="confirmDelete" type="button">Delete tracker data</button></div></form></dialog>
+    <dialog class="creatine-dialog" id="deleteAccountDialog" aria-labelledby="deleteAccountTitle"><form method="dialog" class="creatine-form"><div class="creatine-dialog__heading"><h2 id="deleteAccountTitle">Delete your account?</h2></div><p>This permanently deletes your cloud tracker, dose history, and login for this tool. This cannot be undone.</p><div class="creatine-actions"><button class="creatine-button creatine-button--secondary" value="cancel">Cancel</button><button class="creatine-button creatine-button--danger" id="confirmDeleteAccount" type="button">Delete account</button></div></form></dialog>
+  </div>
+  <script>
+    import "../../scripts/creatine-bootstrap.js";
+  </script>
+</BaseLayout>

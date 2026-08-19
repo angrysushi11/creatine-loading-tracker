@@ -1,0 +1,22 @@
+{
+  "name": "@doubledash/creatine-loading-tracker",
+  "version": "0.1.0",
+  "description": "Deterministic creatine dose tracker, loading estimate, and optional Supabase persistence layer.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angrysushi11/creatine-loading-tracker.git"
+  },
+  "homepage": "https://www.doubledash.me/tools/creatine-loading/",
+  "scripts": {
+    "test": "node --test tests/creatine-model.test.mjs tests/creatine-schedule.test.mjs tests/creatine-cloud-adapter.test.mjs tests/creatine-account-api.test.mjs",
+    "verify:rls": "node scripts/verify-creatine-rls.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.112.2"
+  }
+}

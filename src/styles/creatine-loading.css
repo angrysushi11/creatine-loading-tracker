@@ -1,0 +1,103 @@
+/* Hallmark · genre: modern-minimal · macrostructure: Workbench · theme: locked DoubleDash editorial system · enrichment: none · nav: N9 existing shared header · footer: none */
+.creatine-app { width: min(100% - 2rem, 44rem); margin: 2rem auto 4rem; color: var(--portfolio-ink); font-family: var(--portfolio-font); }
+.creatine-app *, .creatine-app *::before, .creatine-app *::after { box-sizing: border-box; }
+.creatine-app [hidden] { display: none !important; }
+.creatine-app h1, .creatine-app h2, .creatine-app p { margin: 0; }
+.creatine-app h1 { font-size: clamp(2.1rem, 8vw, 3.6rem); letter-spacing: -0.045em; line-height: .98; overflow-wrap: anywhere; }
+.creatine-app h2 { font-size: clamp(1.35rem, 4vw, 1.75rem); letter-spacing: -0.03em; }
+.creatine-setup, .creatine-dashboard { display: grid; gap: 1rem; }
+.creatine-setup[hidden], .creatine-dashboard[hidden], .creatine-undo[hidden], .creatine-settings[hidden], .creatine-recovery[hidden] { display: none; }
+.creatine-account { margin-top: 1rem; padding: .875rem 1rem; border: 1px solid var(--portfolio-rule); border-radius: var(--portfolio-radius); background: var(--portfolio-card); }
+.creatine-account > div { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.creatine-account > div > div { min-width: 0; }
+.creatine-account .creatine-helper { min-height: 0; }
+.creatine-account #accountEmail { overflow-wrap: anywhere; }
+.creatine-setup { padding: clamp(1.25rem, 5vw, 2.5rem); border: 1px solid var(--portfolio-rule); border-radius: var(--portfolio-radius); background: var(--portfolio-card); }
+.creatine-intro { max-width: 58ch; color: var(--portfolio-copy); font-size: 1.0625rem; line-height: 1.5; }
+.creatine-kicker { color: var(--portfolio-muted); font-family: var(--portfolio-mono); font-size: .7rem; letter-spacing: .08em; line-height: 1.5; text-transform: uppercase; }
+.creatine-form { display: grid; gap: 1rem; }
+.creatine-form--compact { padding: 1rem; border: 1px solid var(--portfolio-rule); border-radius: var(--portfolio-radius); background: var(--portfolio-card); }
+.creatine-field { display: grid; min-width: 0; gap: .375rem; }
+.creatine-field label { font-size: .9375rem; font-weight: 600; }
+.creatine-field input, .creatine-field select { width: 100%; min-width: 0; max-width: 100%; min-height: 3rem; padding: .625rem .75rem; border: 1px solid var(--portfolio-muted); border-radius: .25rem; background: var(--portfolio-card); color: var(--portfolio-ink); font: inherit; font-size: 1rem; }
+.creatine-field input[readonly] { background: var(--portfolio-paper); color: var(--portfolio-copy); }
+.creatine-field input:focus-visible, .creatine-field select:focus-visible, .creatine-button:focus-visible, .creatine-text-button:focus-visible, .creatine-data-actions button:focus-visible, .creatine-shortcuts button:focus-visible, .creatine-icon-button:focus-visible, .creatine-history button:focus-visible, .creatine-details summary:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+.creatine-weight-row { display: grid; grid-template-columns: minmax(0, 1fr) 5rem; gap: .5rem; }
+.creatine-dose-choice { display: grid; min-width: 0; gap: .625rem; margin: 0; padding: 0; border: 0; }
+.creatine-dose-choice legend { margin-bottom: .375rem; font-size: .9375rem; font-weight: 600; }
+.creatine-dose-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
+.creatine-dose-options label { position: relative; display: grid; min-height: 3rem; place-items: center; padding: .5rem; border: 1px solid var(--portfolio-rule); border-radius: 999px; background: var(--portfolio-card); font-size: .875rem; font-weight: 700; cursor: pointer; }
+.creatine-dose-options input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.creatine-dose-options label:has(input:checked) { border-color: var(--portfolio-blue); background: var(--portfolio-paper); color: var(--portfolio-blue); }
+.creatine-dose-options label:has(input:focus-visible) { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+.creatine-dose-warning { padding: .75rem; border-left: 3px solid var(--color-danger); background: var(--portfolio-paper); color: var(--portfolio-copy); font-size: .8125rem; line-height: 1.45; }
+.creatine-helper { min-height: 1lh; color: var(--portfolio-muted); font-size: .8125rem; line-height: 1.45; }
+.creatine-notice, .creatine-details__content { display: grid; gap: .625rem; padding: 1rem; border-left: 3px solid var(--portfolio-blue); background: var(--portfolio-paper); color: var(--portfolio-copy); font-size: .875rem; line-height: 1.45; }
+.creatine-button { display: inline-flex; min-height: 3rem; align-items: center; justify-content: center; padding: .75rem 1rem; border: 1px solid var(--portfolio-ink); border-radius: 999px; color: var(--portfolio-ink); font: 700 .875rem/1 var(--portfolio-font); white-space: nowrap; cursor: pointer; transition: transform var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out); }
+.creatine-button:active, .creatine-text-button:active, .creatine-data-actions button:active { transform: translateY(1px); }
+.creatine-button--primary { border-color: var(--portfolio-blue); background: var(--portfolio-blue); color: var(--portfolio-card); }
+.creatine-button--secondary { background: var(--portfolio-card); }
+.creatine-button--danger { border-color: var(--color-danger); background: var(--color-danger); color: var(--color-accent-ink); }
+.creatine-button:disabled { border-color: var(--portfolio-rule); background: var(--portfolio-paper); color: var(--portfolio-muted); cursor: not-allowed; }
+.creatine-dashboard__header, .creatine-progress-card__top, .creatine-progress-row, .creatine-today-card, .creatine-section-heading, .creatine-dialog__heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.creatine-dashboard__header { align-items: center; }
+.creatine-text-button, .creatine-data-actions button, .creatine-history button, .creatine-shortcuts button { min-height: 2.75rem; padding: .5rem .625rem; border: 0; background: transparent; color: var(--portfolio-blue); font: 600 .875rem/1.2 var(--portfolio-font); text-decoration: underline; text-underline-offset: .18em; white-space: nowrap; cursor: pointer; }
+.creatine-progress-card, .creatine-today-card { padding: clamp(1.125rem, 4vw, 1.5rem); border: 1px solid var(--portfolio-rule); border-radius: var(--portfolio-radius); background: var(--portfolio-card); }
+.creatine-progress-card { display: grid; gap: .875rem; }
+.creatine-progress-card__top > p { font-weight: 600; }
+.creatine-progress-row { align-items: center; }
+.creatine-progress { flex: 1; min-width: 0; height: 1rem; overflow: hidden; border-radius: 999px; background: var(--portfolio-paper); }
+.creatine-progress span { display: block; width: var(--progress, 0%); height: 100%; background: var(--portfolio-blue); transition: width var(--dur-short) var(--ease-out); }
+.creatine-progress-row strong { min-width: 4rem; color: var(--portfolio-blue); font-size: clamp(1.75rem, 7vw, 2.5rem); letter-spacing: -.05em; }
+.creatine-progress-row strong[data-state="maintained"] { font-size: clamp(1.125rem, 5vw, 1.5rem); letter-spacing: -.025em; }
+.creatine-today-card { display: grid; gap: 1rem; }
+.creatine-today-line { margin-top: .25rem !important; font-size: 1.125rem; font-weight: 600; letter-spacing: -.02em; }
+.creatine-today-schedule { display: grid; min-width: 0; gap: .5rem; padding-top: .875rem; border-top: 1px solid var(--portfolio-rule); }
+.creatine-today-schedule h2 { font-size: .9375rem; letter-spacing: 0; line-height: 1.3; }
+.creatine-today-schedule ol { display: grid; min-width: 0; gap: 0; margin: 0; padding: 0; list-style: none; }
+.creatine-today-schedule ol:empty { display: none; }
+.creatine-schedule-slot { display: grid; min-width: 0; grid-template-columns: minmax(3.5rem, auto) minmax(0, 1fr); align-items: baseline; gap: .75rem; padding: .4375rem 0; border-bottom: 1px solid var(--portfolio-rule); }
+.creatine-schedule-slot:last-child { border-bottom: 0; }
+.creatine-schedule-slot__label { color: var(--portfolio-muted); font-family: var(--portfolio-mono); font-size: .6875rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.creatine-schedule-slot__time { min-width: 0; color: var(--portfolio-copy); font-size: .9375rem; font-weight: 600; overflow-wrap: anywhere; }
+.creatine-today-schedule #todayScheduleNote { margin-top: .125rem; }
+.creatine-actions { display: grid; gap: .625rem; }
+.creatine-missed { padding: .875rem 1rem; border: 1px solid var(--portfolio-rule); border-radius: var(--portfolio-radius); background: var(--portfolio-paper); color: var(--portfolio-copy); font-size: .875rem; line-height: 1.45; }
+.creatine-undo { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .75rem 1rem; border-radius: var(--portfolio-radius); background: var(--portfolio-ink); color: var(--portfolio-dark-text); font-size: .875rem; }
+.creatine-undo button { min-height: 2.75rem; border: 0; background: transparent; color: var(--portfolio-blue-light); font: 700 .875rem/1 var(--portfolio-font); text-decoration: underline; cursor: pointer; }
+.creatine-settings { margin-top: 1rem; }
+.creatine-settings > .creatine-details__content { gap: 1rem; }
+.creatine-settings .creatine-form--compact { padding: 0; border: 0; border-radius: 0; background: transparent; }
+.creatine-data-actions { display: flex; flex-wrap: wrap; gap: .25rem .75rem; }
+.creatine-data-actions input { position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; }
+.creatine-data-actions .creatine-danger { color: var(--color-danger); }
+.creatine-recovery { display: grid; gap: .75rem; padding: 1rem; border: 1px solid var(--portfolio-rule); border-radius: var(--portfolio-radius); background: var(--portfolio-paper); }
+.creatine-recovery p { color: var(--portfolio-copy); font-size: .875rem; line-height: 1.45; }
+.creatine-privacy { color: var(--portfolio-copy); font-size: .8125rem; line-height: 1.45; }
+.creatine-history > summary h2 { display: inline; font-size: .9375rem; letter-spacing: 0; line-height: 1.35; overflow-wrap: anywhere; }
+.creatine-history > .creatine-details__content { gap: .75rem; }
+.creatine-history #historyList { min-width: 0; }
+.creatine-section-heading { align-items: baseline; }
+.creatine-section-heading p { color: var(--portfolio-muted); font-size: .8125rem; }
+.creatine-history-day { padding-top: .875rem; border-top: 1px solid var(--portfolio-rule); }
+.creatine-history-day__heading { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; color: var(--portfolio-copy); font-size: .875rem; font-weight: 600; }
+.creatine-history-entry { display: flex; min-width: 0; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .25rem .75rem; padding: .625rem 0 0; font-size: .875rem; }
+.creatine-history-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; }
+.creatine-empty { color: var(--portfolio-muted); font-size: .9375rem; }
+.creatine-details { border: 1px solid var(--portfolio-rule); border-radius: var(--portfolio-radius); background: var(--portfolio-card); }
+.creatine-details summary { min-height: 3rem; padding: .9rem 1rem; font-size: .9375rem; font-weight: 600; line-height: 1.35; overflow-wrap: anywhere; cursor: pointer; }
+.creatine-details__content { border-left: 0; }
+.creatine-warning, .creatine-error { padding: .875rem 1rem; border: 1px solid var(--color-danger); border-radius: var(--portfolio-radius); background: var(--portfolio-card); color: var(--color-danger); font-size: .875rem; line-height: 1.45; }
+.creatine-error:empty { display: none; }
+.creatine-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.creatine-dialog { width: min(calc(100% - 2rem), 30rem); min-width: 0; max-width: 30rem; max-height: min(86dvh, 44rem); padding: 0; border: 0; border-radius: var(--portfolio-radius); color: var(--portfolio-ink); box-shadow: var(--shadow-photo); }
+.creatine-dialog::backdrop { background: oklch(20% .01 64 / .5); }
+.creatine-dialog .creatine-form { width: 100%; min-width: 0; max-width: 100%; padding: 1.25rem; overflow-x: hidden; background: var(--portfolio-card); }
+.creatine-dialog__heading h2 { min-width: 0; overflow-wrap: anywhere; }
+.creatine-icon-button { display: grid; flex: 0 0 2.75rem; width: 2.75rem; height: 2.75rem; place-items: center; border: 0; background: transparent; color: var(--portfolio-ink); font-size: 1.75rem; cursor: pointer; }
+.creatine-shortcuts { display: flex; gap: .5rem; }
+@supports selector(:has(*)) { .creatine-dialog:has(#doseDate:focus) #saveDose { visibility: hidden; } }
+@media (max-width: 30rem) { .creatine-account > div { align-items: flex-start; flex-direction: column; } .creatine-account .creatine-text-button { align-self: flex-start; } }
+@media (min-width: 40rem) { .creatine-today-card { grid-template-columns: minmax(0, 1fr) minmax(15rem, .85fr); align-items: center; } .creatine-today-card > :first-child { grid-column: 1; } .creatine-today-schedule { grid-column: 1; } .creatine-today-card > .creatine-actions { grid-column: 2; grid-row: 1 / span 2; } }
+@media (hover: hover) and (pointer: fine) { .creatine-button--primary:hover { background: var(--color-blue-ink); } .creatine-button--secondary:hover { background: var(--portfolio-paper); } .creatine-text-button:hover, .creatine-data-actions button:hover, .creatine-history button:hover { color: var(--portfolio-ink); } }
+@media (prefers-reduced-motion: reduce) { .creatine-progress span, .creatine-button { transition-duration: 0ms; } }
