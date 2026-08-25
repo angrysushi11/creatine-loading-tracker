@@ -1,6 +1,6 @@
 # Security
 
-Please report a suspected vulnerability privately to `dash@doubledash.me`. Do not include real health or account data in the report.
+Please report a suspected vulnerability privately to `tools@doubledash.me`. Do not include real health or account data in the report.
 
 ## Deployment boundary
 
